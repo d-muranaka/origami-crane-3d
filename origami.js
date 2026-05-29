@@ -126,8 +126,8 @@ function createPaper() {
 function animate() {
     requestAnimationFrame(animate);
 
-    // 紙を回転させる
-    if (paperGroup) {
+    // 紙を回転させる（アニメーション中は停止）
+    if (paperGroup && !isAnimating) {
         paperGroup.rotation.x += 0.003;
         paperGroup.rotation.y += 0.005;
     }
@@ -151,7 +151,6 @@ async function playAnimation(animationType) {
     isAnimating = true;
 
     const duration = 1500; // ミリ秒
-    const startTime = Date.now();
 
     switch (animationType) {
         case 'initial':
@@ -188,7 +187,7 @@ async function playAnimation(animationType) {
             // さらに折る
             await animateFold(duration, (progress) => {
                 const rotation = progress * Math.PI / 5;
-                paperGroup.rotation.x += rotation * 0.01;
+                paperGroup.rotation.x = rotation;
                 paperGroup.scale.z = 1 - progress * 0.4;
             });
             break;
@@ -220,27 +219,26 @@ async function playAnimation(animationType) {
         case 'complete':
             // 完成：ゆっくり回転
             await animateFold(2000, (progress) => {
-                paperGroup.rotation.y += progress * Math.PI * 2;
+                paperGroup.rotation.y = progress * Math.PI * 2;
             });
             break;
     }
 
+    // アニメーション終了後、状態をリセット
     isAnimating = false;
+    resetPaperState();
+}
+
+function resetPaperState() {
+    // 各ステップ後の状態を保持する
+    paperGroup.rotation.set(0, 0, 0);
+    paperGroup.scale.set(1, 1, 1);
+    paperGroup.position.set(0, 0, 0);
 }
 
 async function animateFold(duration, updateFn) {
     return new Promise((resolve) => {
         const startTime = Date.now();
-        const startRotation = {
-            x: paperGroup.rotation.x,
-            y: paperGroup.rotation.y,
-            z: paperGroup.rotation.z
-        };
-        const startScale = {
-            x: paperGroup.scale.x,
-            y: paperGroup.scale.y,
-            z: paperGroup.scale.z
-        };
 
         const animate = () => {
             const elapsed = Date.now() - startTime;
