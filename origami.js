@@ -7,55 +7,82 @@ const steps = [
         title: "ステップ 1: 準備",
         description: "正方形の紙を用意します。両面が見えるように置きましょう。",
         hint: "紙が正方形であることを確認してください",
-        animation: "initial"
+        animation: "initial",
+        targetRotation: { x: 0, y: 0, z: 0 },
+        targetScale: { x: 1, y: 1, z: 1 },
+        targetPosition: { x: 0, y: 0, z: 0 }
     },
     {
         title: "ステップ 2: 三角形に折る",
         description: "正方形を対角線で折ります。右上の角を左下の角に合わせて折ってください。",
         hint: "角をしっかり合わせて、角を揃えることが大切です",
-        animation: "foldDiagonal"
+        animation: "foldDiagonal",
+        targetRotation: { x: 0, y: 0, z: Math.PI / 4 },
+        targetScale: { x: 1, y: 1, z: 1 },
+        targetPosition: { x: 0, y: 0, z: 0 }
     },
     {
         title: "ステップ 3: 二等辺三角形に折る",
         description: "折った状態から、右の頂点を左の頂点に合わせて折ります。",
         hint: "もう一度三角形を折ります",
-        animation: "foldToIsosceles"
+        animation: "foldToIsosceles",
+        targetRotation: { x: Math.PI / 6, y: 0, z: Math.PI / 4 },
+        targetScale: { x: 1, y: 1, z: 1 },
+        targetPosition: { x: 0, y: 0, z: 0 }
     },
     {
         title: "ステップ 4: ダイヤモンド形に整える",
         description: "一度広げて、全ての角を中心に向かって折ります。",
         hint: "四隅が中心に集まるように折ります",
-        animation: "foldToDiamond"
+        animation: "foldToDiamond",
+        targetRotation: { x: Math.PI / 6, y: 0, z: Math.PI / 4 + Math.PI / 8 },
+        targetScale: { x: 1, y: 0.7, z: 1 },
+        targetPosition: { x: 0, y: 0, z: 0 }
     },
     {
         title: "ステップ 5: さらに折る",
         description: "もう一度、上と下の角を中心に折ります。",
         hint: "対称に折ることが重要です",
-        animation: "foldAgain"
+        animation: "foldAgain",
+        targetRotation: { x: Math.PI / 5, y: 0, z: Math.PI / 4 + Math.PI / 8 },
+        targetScale: { x: 1, y: 0.7, z: 0.6 },
+        targetPosition: { x: 0, y: 0, z: 0 }
     },
     {
         title: "ステップ 6: 首と尾を作る",
         description: "中央の線で折り、片方を引き出して首と尾を作ります。",
         hint: "慎重に引き出して、形を整えます",
-        animation: "createNeckTail"
+        animation: "createNeckTail",
+        targetRotation: { x: Math.PI / 5, y: Math.PI / 3, z: Math.PI / 4 + Math.PI / 8 },
+        targetScale: { x: 1, y: 0.7, z: 0.6 },
+        targetPosition: { x: 0, y: 0, z: 0.5 }
     },
     {
         title: "ステップ 7: 翼を広げる",
         description: "両側から翼を広げます。軽く引き出すようにしましょう。",
         hint: "翼は対称に広がります",
-        animation: "spreadWings"
+        animation: "spreadWings",
+        targetRotation: { x: Math.PI / 4, y: Math.PI / 3, z: Math.PI / 4 + Math.PI / 8 + Math.PI / 6 },
+        targetScale: { x: 1, y: 0.7, z: 0.6 },
+        targetPosition: { x: 0, y: 0, z: 0.5 }
     },
     {
         title: "ステップ 8: 足を作る",
         description: "下部から小さく折り出して足を作ります。両側に足を作ります。",
         hint: "小さく折り出すことがコツです",
-        animation: "createLegs"
+        animation: "createLegs",
+        targetRotation: { x: Math.PI / 8, y: Math.PI / 3, z: Math.PI / 4 + Math.PI / 8 + Math.PI / 6 },
+        targetScale: { x: 1, y: 0.6, z: 0.6 },
+        targetPosition: { x: 0, y: 0, z: 0.5 }
     },
     {
-        title: "ステップ 9: 完成！",
-        description: "全体を整えて、ツルが完成しました！回転させてみましょう。",
-        hint: "おめでとうございます！美しいツルができました",
-        animation: "complete"
+        title: "ステップ 9: 完成!",
+        description: "全体を整えて、ツルが完成しました! 回転させてみましょう。",
+        hint: "おめでとうございます! 美しいツルができました",
+        animation: "complete",
+        targetRotation: { x: Math.PI / 8, y: Math.PI, z: Math.PI / 4 + Math.PI / 8 + Math.PI / 6 },
+        targetScale: { x: 1, y: 0.6, z: 0.6 },
+        targetPosition: { x: 0, y: 0, z: 0.5 }
     }
 ];
 
@@ -151,6 +178,7 @@ async function playAnimation(animationType) {
     isAnimating = true;
 
     const duration = 1500; // ミリ秒
+    const targetState = steps[currentStep];
 
     switch (animationType) {
         case 'initial':
@@ -160,85 +188,67 @@ async function playAnimation(animationType) {
 
         case 'foldDiagonal':
             // 対角線で折る
-            await animateFold(duration, (progress) => {
-                const rotation = progress * Math.PI / 4;
-                paperGroup.rotation.z = rotation;
-            });
+            await animateFold(duration, targetState.targetRotation, targetState.targetScale, targetState.targetPosition);
             break;
 
         case 'foldToIsosceles':
             // 二等辺三角形に折る
-            await animateFold(duration, (progress) => {
-                const rotation = progress * Math.PI / 6;
-                paperGroup.rotation.x = rotation;
-            });
+            await animateFold(duration, targetState.targetRotation, targetState.targetScale, targetState.targetPosition);
             break;
 
         case 'foldToDiamond':
             // ダイヤモンド形に折る
-            await animateFold(duration, (progress) => {
-                const scaleY = 1 - progress * 0.3;
-                paperGroup.scale.y = scaleY;
-                paperGroup.rotation.z = progress * Math.PI / 8;
-            });
+            await animateFold(duration, targetState.targetRotation, targetState.targetScale, targetState.targetPosition);
             break;
 
         case 'foldAgain':
             // さらに折る
-            await animateFold(duration, (progress) => {
-                const rotation = progress * Math.PI / 5;
-                paperGroup.rotation.x = rotation;
-                paperGroup.scale.z = 1 - progress * 0.4;
-            });
+            await animateFold(duration, targetState.targetRotation, targetState.targetScale, targetState.targetPosition);
             break;
 
         case 'createNeckTail':
             // 首と尾を作る
-            await animateFold(duration, (progress) => {
-                paperGroup.rotation.y = progress * Math.PI / 3;
-                paperGroup.position.z = progress * 0.5;
-            });
+            await animateFold(duration, targetState.targetRotation, targetState.targetScale, targetState.targetPosition);
             break;
 
         case 'spreadWings':
             // 翼を広げる
-            await animateFold(duration, (progress) => {
-                paperGroup.rotation.x = progress * Math.PI / 4;
-                paperGroup.rotation.z = progress * Math.PI / 6;
-            });
+            await animateFold(duration, targetState.targetRotation, targetState.targetScale, targetState.targetPosition);
             break;
 
         case 'createLegs':
             // 足を作る
-            await animateFold(duration, (progress) => {
-                paperGroup.rotation.x = progress * Math.PI / 8;
-                paperGroup.scale.y = 1 - progress * 0.1;
-            });
+            await animateFold(duration, targetState.targetRotation, targetState.targetScale, targetState.targetPosition);
             break;
 
         case 'complete':
             // 完成：ゆっくり回転
-            await animateFold(2000, (progress) => {
-                paperGroup.rotation.y = progress * Math.PI * 2;
-            });
+            await animateFold(2000, targetState.targetRotation, targetState.targetScale, targetState.targetPosition);
             break;
     }
 
-    // アニメーション終了後、状態をリセット
+    // アニメーション終了
     isAnimating = false;
-    resetPaperState();
 }
 
-function resetPaperState() {
-    // 各ステップ後の状態を保持する
-    paperGroup.rotation.set(0, 0, 0);
-    paperGroup.scale.set(1, 1, 1);
-    paperGroup.position.set(0, 0, 0);
-}
-
-async function animateFold(duration, updateFn) {
+async function animateFold(duration, targetRotation, targetScale, targetPosition) {
     return new Promise((resolve) => {
         const startTime = Date.now();
+        const startRotation = {
+            x: paperGroup.rotation.x,
+            y: paperGroup.rotation.y,
+            z: paperGroup.rotation.z
+        };
+        const startScale = {
+            x: paperGroup.scale.x,
+            y: paperGroup.scale.y,
+            z: paperGroup.scale.z
+        };
+        const startPosition = {
+            x: paperGroup.position.x,
+            y: paperGroup.position.y,
+            z: paperGroup.position.z
+        };
 
         const animate = () => {
             const elapsed = Date.now() - startTime;
@@ -249,7 +259,20 @@ async function animateFold(duration, updateFn) {
                 ? 2 * progress * progress
                 : -1 + (4 - 2 * progress) * progress;
 
-            updateFn(easeProgress);
+            // 回転をアニメーション
+            paperGroup.rotation.x = startRotation.x + (targetRotation.x - startRotation.x) * easeProgress;
+            paperGroup.rotation.y = startRotation.y + (targetRotation.y - startRotation.y) * easeProgress;
+            paperGroup.rotation.z = startRotation.z + (targetRotation.z - startRotation.z) * easeProgress;
+
+            // スケールをアニメーション
+            paperGroup.scale.x = startScale.x + (targetScale.x - startScale.x) * easeProgress;
+            paperGroup.scale.y = startScale.y + (targetScale.y - startScale.y) * easeProgress;
+            paperGroup.scale.z = startScale.z + (targetScale.z - startScale.z) * easeProgress;
+
+            // 位置をアニメーション
+            paperGroup.position.x = startPosition.x + (targetPosition.x - startPosition.x) * easeProgress;
+            paperGroup.position.y = startPosition.y + (targetPosition.y - startPosition.y) * easeProgress;
+            paperGroup.position.z = startPosition.z + (targetPosition.z - startPosition.z) * easeProgress;
 
             if (progress < 1) {
                 requestAnimationFrame(animate);
@@ -271,7 +294,7 @@ function updateUI() {
     document.getElementById('step-description').textContent = step.description;
     document.getElementById('animation-hint').textContent = '💡 ' + step.hint;
 
-    // ステップインジケーターを更新
+    // ��テップインジケーターを更新
     document.getElementById('current-step').textContent = currentStep + 1;
     document.getElementById('total-steps').textContent = steps.length;
 
