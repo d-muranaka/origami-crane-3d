@@ -1,0 +1,296 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #e74c3c;
+    --secondary-color: #3498db;
+    --accent-color: #f39c12;
+    --bg-color: #ecf0f1;
+    --text-color: #2c3e50;
+    --border-color: #bdc3c7;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: var(--text-color);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+main {
+    padding: 40px 20px;
+}
+
+.tutorial-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+.canvas-container {
+    position: relative;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    aspect-ratio: 1;
+}
+
+#canvas3d {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.step-indicator {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.control-panel {
+    background: var(--bg-color);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.step-info {
+    margin-bottom: 25px;
+}
+
+.step-info h2 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+}
+
+.step-info p {
+    color: var(--text-color);
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+.animation-info {
+    background: #fff3cd;
+    border-left: 4px solid var(--accent-color);
+    padding: 12px 15px;
+    border-radius: 4px;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+}
+
+.animation-info p {
+    margin: 0;
+}
+
+.controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.btn {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-prev,
+.btn-next {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.btn-prev:hover,
+.btn-next:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(52, 152, 219, 0.3);
+}
+
+.btn-prev:active,
+.btn-next:active {
+    transform: translateY(0);
+}
+
+.btn-play {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-play:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(231, 76, 60, 0.3);
+}
+
+.btn-play:active {
+    transform: translateY(0);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 25px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+    width: 11%;
+    transition: width 0.3s ease;
+    border-radius: 4px;
+}
+
+.step-list {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.step-list h3 {
+    color: var(--text-color);
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.step-list ol {
+    list-style-position: inside;
+    line-height: 2;
+}
+
+.step-list li {
+    color: #7f8c8d;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.step-list li:hover {
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.step-list li.active {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+footer {
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* レスポンシブ デザイン */
+@media (max-width: 1024px) {
+    .tutorial-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .canvas-container {
+        max-height: 500px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 640px) {
+    header {
+        padding: 30px 15px;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    header p {
+        font-size: 1rem;
+    }
+
+    main {
+        padding: 20px 15px;
+    }
+
+    .control-panel {
+        padding: 20px;
+    }
+
+    .controls {
+        flex-direction: column;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    .step-info h2 {
+        font-size: 1.2rem;
+    }
+
+    .step-list ol {
+        line-height: 1.8;
+        font-size: 0.9rem;
+    }
+}

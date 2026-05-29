@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D折り紙チュートリアル - ツルの折り方</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>���� 3D折り紙チュートリアル</h1>
+            <p>ツルを折ってみましょう</p>
+        </header>
+
+        <main>
+            <div class="tutorial-wrapper">
+                <!-- 3Dキャンバス -->
+                <div class="canvas-container">
+                    <canvas id="canvas3d"></canvas>
+                    <div class="step-indicator">
+                        <span id="current-step">1</span> / <span id="total-steps">9</span>
+                    </div>
+                </div>
+
+                <!-- コントロールパネル -->
+                <div class="control-panel">
+                    <div class="step-info">
+                        <h2 id="step-title">ステップ 1: 準備</h2>
+                        <p id="step-description">正方形の紙を用意します。両面が見えるように置きましょう。</p>
+                    </div>
+
+                    <div class="animation-info">
+                        <p id="animation-hint">💡 3Dモデルが回転しながらアニメーションを再生します</p>
+                    </div>
+
+                    <div class="controls">
+                        <button id="prev-btn" class="btn btn-prev">← 前へ</button>
+                        <button id="play-pause-btn" class="btn btn-play">▶ 再生</button>
+                        <button id="next-btn" class="btn btn-next">次へ →</button>
+                    </div>
+
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+
+                    <div class="step-list">
+                        <h3>折り方ガイド</h3>
+                        <ol id="steps-list">
+                            <li class="active">準備</li>
+                            <li>三角形に折る</li>
+                            <li>二等辺三角形に折る</li>
+                            <li>ダイヤモンド形に整える</li>
+                            <li>四隅を中心に向かって折る</li>
+                            <li>首と尾を作る</li>
+                            <li>翼を広げる</li>
+                            <li>足を作る</li>
+                            <li>完成</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>このチュートリアルは Vanilla JavaScript + Three.js で実装されています</p>
+        </footer>
+    </div>
+
+    <!-- Three.js ライブラリ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- アプリケーション スクリプト -->
+    <script src="origami.js"></script>
+</body>
+</html>
