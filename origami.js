@@ -76,9 +76,9 @@ const steps = [
         targetPosition: { x: 0, y: 0, z: 0.5 }
     },
     {
-        title: "ステップ 9: 完成!",
-        description: "全体を整えて、ツルが完成しました! 回転させてみましょう。",
-        hint: "おめでとうございます! 美しいツルができました",
+        title: "ステップ 9: 完成！",
+        description: "全体を整えて、ツルが完成しました！回転させてみましょう。",
+        hint: "おめでとうございます！美しいツルができました",
         animation: "complete",
         targetRotation: { x: Math.PI / 8, y: Math.PI, z: Math.PI / 4 + Math.PI / 8 + Math.PI / 6 },
         targetScale: { x: 1, y: 0.6, z: 0.6 },
@@ -106,7 +106,7 @@ function initThreeJS() {
     camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
     camera.position.set(0, 0, 3);
 
-    // レンダラーの設定
+    // レンダ���ーの設定
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
     renderer.setSize(width, height);
     renderer.setPixelRatio(window.devicePixelRatio);
@@ -153,10 +153,12 @@ function createPaper() {
 function animate() {
     requestAnimationFrame(animate);
 
-    // 紙を回転させる（アニメーション中は停止）
+    // 紙を回転させる（アニメーション中は停止、パルスを回転させる）
     if (paperGroup && !isAnimating) {
-        paperGroup.rotation.x += 0.003;
-        paperGroup.rotation.y += 0.005;
+        const baseRotation = 0.003;
+        const pulseRotation = 0.005;
+        paperGroup.rotation.x += baseRotation;
+        paperGroup.rotation.y += pulseRotation;
     }
 
     renderer.render(scene, camera);
