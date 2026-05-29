@@ -187,37 +187,13 @@ async function playAnimation(animationType) {
             break;
 
         case 'foldDiagonal':
-            // 対角線で折る
-            await animateFold(duration, targetState.targetRotation, targetState.targetScale, targetState.targetPosition);
-            break;
-
         case 'foldToIsosceles':
-            // 二等辺三角形に折る
-            await animateFold(duration, targetState.targetRotation, targetState.targetScale, targetState.targetPosition);
-            break;
-
         case 'foldToDiamond':
-            // ダイヤモンド形に折る
-            await animateFold(duration, targetState.targetRotation, targetState.targetScale, targetState.targetPosition);
-            break;
-
         case 'foldAgain':
-            // さらに折る
-            await animateFold(duration, targetState.targetRotation, targetState.targetScale, targetState.targetPosition);
-            break;
-
         case 'createNeckTail':
-            // 首と尾を作る
-            await animateFold(duration, targetState.targetRotation, targetState.targetScale, targetState.targetPosition);
-            break;
-
         case 'spreadWings':
-            // 翼を広げる
-            await animateFold(duration, targetState.targetRotation, targetState.targetScale, targetState.targetPosition);
-            break;
-
         case 'createLegs':
-            // 足を作る
+            // 各折り動作
             await animateFold(duration, targetState.targetRotation, targetState.targetScale, targetState.targetPosition);
             break;
 
@@ -294,7 +270,7 @@ function updateUI() {
     document.getElementById('step-description').textContent = step.description;
     document.getElementById('animation-hint').textContent = '💡 ' + step.hint;
 
-    // ��テップインジケーターを更新
+    // ステップインジケーターを更新
     document.getElementById('current-step').textContent = currentStep + 1;
     document.getElementById('total-steps').textContent = steps.length;
 
